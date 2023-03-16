@@ -10,19 +10,7 @@ const refs = {
     cardCountryEl: document.querySelector('.country-info'),
 };
 
-refs.inputEl.addEventListener('input', onInput);
-
-const BASE_URL = 'https://restcountries.com/v3.1/name';
-const FILTERS = 'fields=name,capital,population,flags,languages';
-
-function fetchCountries(name) {
-  return fetch(`${BASE_URL}/${name}?&${FILTERS}`).then(response => {
-    if (!response.ok) {
-      Notify.failure('Oops, there is no country with that name');
-    }
-    return response.json();
-  });
-};
+refs.inputEl.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
 
 function createItemsMarkup(result) {
   return result
